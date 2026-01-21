@@ -1,0 +1,328 @@
+<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="AssetCentre DR Report Tool"
+    Height="720"
+    Width="650"
+    MinHeight="600"
+    MinWidth="550"
+    WindowStartupLocation="CenterScreen"
+    Background="#F9F9F9">
+
+    <Window.Resources>
+        <!-- Color Palette -->
+        <SolidColorBrush x:Key="PrimaryBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SecondaryBackground" Color="#F9F9F9"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#E5E5E5"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#1A1A1A"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#6B6B6B"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#D97757"/>
+        <SolidColorBrush x:Key="SuccessColor" Color="#16A34A"/>
+        <SolidColorBrush x:Key="WarningColor" Color="#D97706"/>
+        <SolidColorBrush x:Key="FailedColor" Color="#DC2626"/>
+        <SolidColorBrush x:Key="HeaderBackground" Color="#2D2D2D"/>
+        <SolidColorBrush x:Key="HeaderText" Color="#FFFFFF"/>
+
+        <!-- GroupBox Style -->
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="10,5,10,5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryBackground}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+        </Style>
+
+        <!-- Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C46647"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#CCCCCC"/>
+                    <Setter Property="Foreground" Value="#999999"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Secondary Button Style -->
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EEEEEE"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryBackground}"/>
+        </Style>
+
+        <!-- ComboBox Style -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <!-- CheckBox Style -->
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+        </Style>
+
+        <!-- RadioButton Style -->
+        <Style TargetType="RadioButton">
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+        </Style>
+
+        <!-- Label Style -->
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="Padding" Value="0,4"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{StaticResource HeaderBackground}" Padding="15,12">
+            <StackPanel>
+                <TextBlock Text="AssetCentre DR Report Tool"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource HeaderText}"/>
+                <TextBlock Text="Generate and send DR backup status reports"
+                           FontSize="12"
+                           Foreground="#A0A0A0"
+                           Margin="0,2,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0,5,0,10">
+
+                <!-- Database Connection Section -->
+                <GroupBox Header="DATABASE CONNECTION">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="Server:"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtServer" ToolTip="SQL Server instance name"/>
+
+                        <Label Grid.Row="0" Grid.Column="2" Content="Database:" Margin="10,0,0,0"/>
+                        <ComboBox Grid.Row="0" Grid.Column="3" Name="cboDatabase" IsEditable="True" Text="AssetCentre">
+                            <ComboBoxItem Content="AssetCentre"/>
+                        </ComboBox>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,8,0,0">
+                            <Label Content="Auth:"/>
+                            <RadioButton Name="rbWindowsAuth" Content="Windows" IsChecked="True" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            <RadioButton Name="rbSqlAuth" Content="SQL" Margin="15,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Button Grid.Row="1" Grid.Column="3" Name="btnTestConnection" Content="Test Connection"
+                                Style="{StaticResource SecondaryButton}" HorizontalAlignment="Right" Margin="0,5,0,0"/>
+
+                        <!-- SQL Auth credentials (hidden by default) -->
+                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Name="pnlSqlAuth" Visibility="Collapsed" Margin="0,8,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="Username:"/>
+                                <TextBox Grid.Column="1" Name="txtUsername"/>
+                                <Label Grid.Column="2" Content="Password:" Margin="10,0,0,0"/>
+                                <PasswordBox Grid.Column="3" Name="txtPassword" Padding="8,6" Margin="0,2"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Report Scope Section -->
+                <GroupBox Header="REPORT SCOPE">
+                    <StackPanel>
+                        <RadioButton Name="rbEntireTree" Content="Entire AssetCentre Tree" IsChecked="True"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <RadioButton Name="rbSpecificFolder" Content="Specific Folder:" VerticalAlignment="Center"/>
+                            <TextBox Name="txtFolderFilter" Width="250" Margin="10,0,0,0"
+                                     IsEnabled="False" ToolTip="Enter folder name to filter"/>
+                            <Button Name="btnBrowseFolder" Content="Browse" Style="{StaticResource SecondaryButton}"
+                                    IsEnabled="False" Margin="5,0,0,0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <Label Content="Filter:"/>
+                            <CheckBox Name="chkFailedOnly" Content="Failed Only" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            <CheckBox Name="chkWarnings" Content="Warnings" Margin="15,0,0,0" VerticalAlignment="Center" IsChecked="True"/>
+                            <CheckBox Name="chkSuccess" Content="Success" Margin="15,0,0,0" VerticalAlignment="Center" IsChecked="True"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Email Configuration Section -->
+                <GroupBox Header="EMAIL CONFIGURATION">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="To:"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtEmailTo"
+                                 ToolTip="Comma-separated email addresses"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Content="CC:"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtEmailCC"
+                                 ToolTip="Comma-separated CC addresses (optional)"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Content="Subject:"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="txtEmailSubject"
+                                 Text="DR Report - {Date} - {Summary}"
+                                 ToolTip="Use {Date}, {FailedCount}, {WarningCount}, {Summary} placeholders"/>
+
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="0,8,0,0">
+                            <CheckBox Name="chkIncludeFullMessage" Content="Include full message details"/>
+                            <CheckBox Name="chkAttachCsv" Content="Attach CSV export" Margin="20,0,0,0" IsChecked="True"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Scheduling Section -->
+                <GroupBox Header="SCHEDULING">
+                    <StackPanel>
+                        <CheckBox Name="chkEnableSchedule" Content="Enable scheduled execution"/>
+
+                        <Grid Name="pnlScheduleOptions" Margin="20,10,0,0" IsEnabled="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Content="Frequency:"/>
+                            <ComboBox Grid.Column="1" Name="cboFrequency" Width="100">
+                                <ComboBoxItem Content="Daily"/>
+                                <ComboBoxItem Content="Weekly" IsSelected="True"/>
+                                <ComboBoxItem Content="Monthly"/>
+                            </ComboBox>
+
+                            <Label Grid.Column="2" Content="Day:" Margin="15,0,0,0"/>
+                            <ComboBox Grid.Column="3" Name="cboDay" Width="100">
+                                <ComboBoxItem Content="Sunday"/>
+                                <ComboBoxItem Content="Monday" IsSelected="True"/>
+                                <ComboBoxItem Content="Tuesday"/>
+                                <ComboBoxItem Content="Wednesday"/>
+                                <ComboBoxItem Content="Thursday"/>
+                                <ComboBoxItem Content="Friday"/>
+                                <ComboBoxItem Content="Saturday"/>
+                            </ComboBox>
+
+                            <Label Grid.Column="4" Content="Time:" Margin="15,0,0,0"/>
+                            <TextBox Grid.Column="5" Name="txtTime" Width="60" Text="07:00"
+                                     ToolTip="HH:mm format"/>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" Margin="20,10,0,0">
+                            <Button Name="btnCreateTask" Content="Create Task" Style="{StaticResource SecondaryButton}"
+                                    IsEnabled="False"/>
+                            <Button Name="btnRemoveTask" Content="Remove Task" Style="{StaticResource SecondaryButton}"
+                                    IsEnabled="False"/>
+                            <TextBlock Name="txtTaskStatus" VerticalAlignment="Center" Margin="15,0,0,0"
+                                       Foreground="{StaticResource TextSecondary}" FontStyle="Italic"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Footer / Action Buttons -->
+        <Border Grid.Row="2" Background="{StaticResource PrimaryBackground}"
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="0,1,0,0"
+                Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Action Buttons -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Name="btnExecute" Content="Execute Now" Width="120"/>
+                    <Button Name="btnPreview" Content="Preview HTML" Style="{StaticResource SecondaryButton}" Width="120"/>
+                    <Button Name="btnSaveConfig" Content="Save Config" Style="{StaticResource SecondaryButton}" Width="120"/>
+                    <Button Name="btnLoadConfig" Content="Load Config" Style="{StaticResource SecondaryButton}" Width="120"/>
+                </StackPanel>
+
+                <!-- Status Bar -->
+                <Border Grid.Row="1" Background="{StaticResource SecondaryBackground}"
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                        CornerRadius="4" Margin="5,10,5,0" Padding="10,8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Name="txtStatus" Text="Ready"
+                                   Foreground="{StaticResource TextPrimary}"/>
+                        <TextBlock Grid.Column="1" Name="txtLastRun"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   FontSize="11"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

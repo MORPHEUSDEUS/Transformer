@@ -1,0 +1,30 @@
+{
+  "database": {
+    "server": "SERVERNAME",
+    "database": "AssetCentre",
+    "useWindowsAuth": true
+  },
+  "report": {
+    "scope": "all",
+    "folderFilter": null,
+    "includeWarnings": true,
+    "includeSuccess": false,
+    "includeFullMessage": false,
+    "attachCsv": true
+  },
+  "email": {
+    "to": [
+      "team@company.com"
+    ],
+    "cc": [
+      "manager@company.com"
+    ],
+    "subjectTemplate": "DR Report - {Date} - {FailedCount} Failed, {WarningCount} Warnings"
+  },
+  "schedule": {
+    "enabled": true,
+    "frequency": "Weekly",
+    "dayOfWeek": "Monday",
+    "time": "07:00"
+  }
+}
