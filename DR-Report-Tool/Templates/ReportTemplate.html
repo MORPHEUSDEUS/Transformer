@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AssetCentre DR Report</title>
+  <!--
+    AssetCentre DR Report Email Template
+    Color Palette (Claude Light Theme):
+    - Primary Background:   #FFFFFF
+    - Secondary Background: #F9F9F9
+    - Card Background:      #FFFFFF
+    - Border:               #E5E5E5
+    - Text Primary:         #1A1A1A
+    - Text Secondary:       #6B6B6B
+    - Success:              #16A34A (green)
+    - Warning:              #D97706 (amber)
+    - Failed:               #DC2626 (red)
+    - Accent/Links:         #D97757 (claude terracotta)
+    - Header Background:    #2D2D2D
+    - Header Text:          #FFFFFF
+  -->
+  <style>
+    /* Reset and base styles */
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #F9F9F9;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.5;
+      color: #1A1A1A;
+    }
+
+    /* Main container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Header section */
+    .header {
+      background: #2D2D2D;
+      color: #FFFFFF;
+      padding: 24px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .header .subtitle {
+      color: #A0A0A0;
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    /* Summary cards */
+    .summary {
+      display: flex;
+      gap: 16px;
+      padding: 20px;
+      border-bottom: 1px solid #E5E5E5;
+    }
+
+    .summary-card {
+      flex: 1;
+      padding: 16px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .summary-card.success {
+      background: #F0FDF4;
+      border: 1px solid #16A34A;
+    }
+
+    .summary-card.warning {
+      background: #FFFBEB;
+      border: 1px solid #D97706;
+    }
+
+    .summary-card.failed {
+      background: #FEF2F2;
+      border: 1px solid #DC2626;
+    }
+
+    .summary-card .count {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .summary-card.success .count {
+      color: #16A34A;
+    }
+
+    .summary-card.warning .count {
+      color: #D97706;
+    }
+
+    .summary-card.failed .count {
+      color: #DC2626;
+    }
+
+    .summary-card .label {
+      color: #6B6B6B;
+      font-size: 14px;
+    }
+
+    /* Section styles */
+    .section {
+      padding: 20px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #D97757;
+      padding-bottom: 8px;
+    }
+
+    /* Folder grouping */
+    .folder-group {
+      margin-bottom: 24px;
+    }
+
+    .folder-name {
+      font-weight: 600;
+      color: #1A1A1A;
+      background: #F9F9F9;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      background: #F9F9F9;
+      text-align: left;
+      padding: 10px;
+      border-bottom: 2px solid #E5E5E5;
+      color: #6B6B6B;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #E5E5E5;
+      color: #1A1A1A;
+      vertical-align: top;
+    }
+
+    tr:hover {
+      background: #FAFAFA;
+    }
+
+    /* Status badges */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .status-success {
+      background: #F0FDF4;
+      color: #16A34A;
+    }
+
+    .status-warning {
+      background: #FFFBEB;
+      color: #D97706;
+    }
+
+    .status-failed {
+      background: #FEF2F2;
+      color: #DC2626;
+    }
+
+    /* Asset type styling */
+    .asset-type {
+      color: #6B6B6B;
+      font-size: 11px;
+    }
+
+    /* Error text */
+    .error-text {
+      color: #DC2626;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* Full message styling */
+    .full-message {
+      color: #6B6B6B;
+      font-size: 11px;
+      margin-top: 4px;
+      font-style: italic;
+      max-width: 300px;
+      word-wrap: break-word;
+    }
+
+    /* Footer */
+    .footer {
+      background: #F9F9F9;
+      padding: 16px;
+      text-align: center;
+      color: #6B6B6B;
+      font-size: 12px;
+      border-radius: 0 0 8px 8px;
+      border-top: 1px solid #E5E5E5;
+    }
+
+    .footer a {
+      color: #D97757;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive styles for mobile */
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .summary {
+        flex-direction: column;
+      }
+
+      .summary-card {
+        margin-bottom: 10px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px 6px;
+      }
+
+      .header {
+        padding: 16px;
+      }
+
+      .header h1 {
+        font-size: 20px;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .container {
+        box-shadow: none;
+      }
+
+      .header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>AssetCentre DR Report</h1>
+      <div class="subtitle">Generated: {{GeneratedDate}} | Schedule: {{ScheduleName}}</div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary">
+      <div class="summary-card success">
+        <div class="count">{{SuccessCount}}</div>
+        <div class="label">Success</div>
+      </div>
+      <div class="summary-card warning">
+        <div class="count">{{WarningCount}}</div>
+        <div class="label">Differences</div>
+      </div>
+      <div class="summary-card failed">
+        <div class="count">{{FailedCount}}</div>
+        <div class="label">Failed</div>
+      </div>
+    </div>
+
+    <!-- Failed Assets Section -->
+    {{FailedSection}}
+
+    <!-- Warnings Section -->
+    {{WarningsSection}}
+
+    <!-- Success Section -->
+    {{SuccessSection}}
+
+    <!-- Footer -->
+    <div class="footer">
+      Report generated by AssetCentre DR Report Tool | <a href="mailto:support@company.com">Support</a>
+    </div>
+  </div>
+</body>
+</html>
